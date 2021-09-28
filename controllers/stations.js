@@ -1,4 +1,4 @@
-// const axios = require('axios');
+const axios = require('axios');
 const Station = require('../models/Station');
 
 // @desc    Get all stations
@@ -6,34 +6,59 @@ const Station = require('../models/Station');
 // @access  Public
 exports.getStations = async (req, res, next) => {
   try {
-    // delete current stations data
-    // await Station.deleteMany();
-    // update stations db with latest data from vlille API
-    // const response = await axios.get(process.env.VLILLE_URL);
-    // await Station.create(response.data.records);
-    // get stations from db
+    await Station.deleteMany();
+    const response = await axios.get(
+      'https://opendata.lillemetropole.fr/api/records/1.0/search/?dataset=vlille-realtime&q=&rows=25'
+    );
+    await Station.create(response.data.records);
     const stations = await Station.find();
-    res
-      .status(200)
-      .json({ success: true, count: stations.length, data: stations });
-  } catch (err) {
-    res.status(400).json({ success: false });
+
+    res.render('index', { stations });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+// @desc    Get client program interface
+// @route   GET /api/v1/stations/find
+// @access  Public
+exports.clientProgram = (req, res, next) => {
+  try {
+    res.render('client');
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+exports.businessProgram = (req, res, next) => {
+  try {
+    res.render('business');
+  } catch (error) {
+    console.log(error.message);
   }
 };
 
-// @desc    Get a single station
-// @route   GET /api/v1/stations/:id
+// @desc    Get stations near user position
+// @route   POST /api/v1/stations/nearest
 // @access  Public
-exports.getStation = async (req, res, next) => {
+exports.getStationNearMe = async (req, res, next) => {
   try {
-    const regex = new RegExp(req.params.id);
-    const station = await Station.findOne({ 'fields.nom': { $regex: regex } });
-    if (!station) {
-      return res.status(400).json({ sucess: false });
+    const stations = await Station.find({
+      geometry: {
+        $near: {
+          $geometry: {
+            type: 'Point',
+            coordinates: [req.body.latitude, req.body.longitude],
+          },
+          $maxDistance: 1000,
+          $minDistance: 0,
+        },
+      },
+    });
+    if (!stations) {
+      res.status(200).json({ success: true, data: [] });
     }
-    res.status(200).json({ success: true, data: station });
-  } catch (err) {
-    res.status(400).json({ success: false });
+    res.render('clientResult', { stations });
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -64,8 +89,8 @@ exports.deleteStation = async (req, res, next) => {
     if (!station) {
       return res.status(400).json({ success: false });
     }
-    res.status(200).json({ success: true, data: {} });
+    res.redirect('/');
   } catch (err) {
-    res.status(400).json({ success: false });
+    console.log(err);
   }
 };

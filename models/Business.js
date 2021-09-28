@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const StationSchema = new mongoose.Schema({
+const BusinessSchema = new mongoose.Schema({
   datasetid: String,
   recordid: String,
   fields: {
@@ -38,4 +38,4 @@ const StationSchema = new mongoose.Schema({
   slug: String,
 });
 
-module.exports = mongoose.model('Station', StationSchema);
+module.exports = mongoose.model('Business', BusinessSchema);

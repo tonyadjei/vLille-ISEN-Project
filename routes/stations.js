@@ -3,12 +3,17 @@ const {
   getStations,
   updateStation,
   deleteStation,
-  getStation,
+  getStationNearMe,
+  clientProgram,
+  businessProgram,
 } = require('../controllers/stations');
 
 const router = express.Router();
 
 router.route('/').get(getStations);
-router.route('/:id').get(getStation).put(updateStation).delete(deleteStation);
+router.route('/find').get(clientProgram);
+router.route('/business').get(businessProgram);
+router.route('/nearest').post(getStationNearMe);
+router.route('/:id').put(updateStation).delete(deleteStation);
 
 module.exports = router;
