@@ -14,8 +14,6 @@ exports.getStations = async (req, res, next) => {
 };
 exports.getStation = async (req, res, next) => {
   try {
-    // const regex = RegExp(req.body.name);
-    console.log(req.body.name);
     const station = await Business.findOne({
       $text: { $search: req.body.name },
     });
