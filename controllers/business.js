@@ -6,8 +6,8 @@ const Business = require('../models/Business');
 exports.getStations = async (req, res, next) => {
   try {
     const stations = await Business.find();
-    // res.render('business', { stations });
-    console.log(stations);
+    res.render('business', { stations });
+    // console.log(stations);
   } catch (error) {
     console.log(error.message);
   }
@@ -17,9 +17,9 @@ exports.getStation = async (req, res, next) => {
     const station = await Business.findOne({
       $text: { $search: req.body.name },
     });
-    // res.render('show', { station });
+    res.render('show', { station });
     // res.status(200).json({ success: true, data: station });
-    console.log(station);
+    // console.log(station);
   } catch (error) {
     console.log(error.message);
   }
