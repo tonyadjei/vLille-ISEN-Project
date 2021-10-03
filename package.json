@@ -7,7 +7,7 @@
     "start": "NODE_ENV=production node server",
     "dev": "nodemon server"
   },
-  "author": "Anthony Teye-Adjei",
+  "author": "",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.21.4",
