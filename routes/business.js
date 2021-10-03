@@ -9,7 +9,7 @@ const {
 const router = express.Router();
 
 router.route('/').get(getStations);
-router.route('/find').post(getStation);
+router.route('/find').get(getStation);
 router.route('/:id').put(updateStation).delete(deleteStation);
 
 module.exports = router;

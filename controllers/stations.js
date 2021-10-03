@@ -13,7 +13,8 @@ exports.getStations = async (req, res, next) => {
     await Station.create(response.data.records);
     const stations = await Station.find();
 
-    res.render('index', { stations });
+    // res.render('index', { stations });
+    console.log(stations);
   } catch (error) {
     console.log(error.message);
   }
@@ -56,7 +57,8 @@ exports.getStationNearMe = async (req, res, next) => {
     if (!stations) {
       res.status(200).json({ success: true, data: [] });
     }
-    res.render('clientResult', { stations });
+    // res.render('clientResult', { stations });
+    console.log(stations);
   } catch (error) {
     console.log(error);
   }
@@ -74,7 +76,8 @@ exports.updateStation = async (req, res, next) => {
     if (!station) {
       return res.status(400).json({ success: false });
     }
-    res.status(200).json({ success: true, data: station });
+    // res.status(200).json({ success: true, data: station });
+    console.log(station);
   } catch (err) {
     res.status(400).json({ success: false });
   }
@@ -89,7 +92,8 @@ exports.deleteStation = async (req, res, next) => {
     if (!station) {
       return res.status(400).json({ success: false });
     }
-    res.redirect('/');
+    // res.redirect('/');
+    console.log('Station has been deleted!');
   } catch (err) {
     console.log(err);
   }

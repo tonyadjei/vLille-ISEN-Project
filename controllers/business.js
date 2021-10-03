@@ -6,18 +6,22 @@ const Business = require('../models/Business');
 exports.getStations = async (req, res, next) => {
   try {
     const stations = await Business.find();
-    res.render('business', { stations });
+    // res.render('business', { stations });
+    console.log(stations);
   } catch (error) {
     console.log(error.message);
   }
 };
 exports.getStation = async (req, res, next) => {
   try {
-    const regex = RegExp(req.body.name);
+    // const regex = RegExp(req.body.name);
+    console.log(req.body.name);
     const station = await Business.findOne({
-      'fields.nom': { $regex: regex },
+      $text: { $search: req.body.name },
     });
-    res.render('show', { station });
+    // res.render('show', { station });
+    // res.status(200).json({ success: true, data: station });
+    console.log(station);
   } catch (error) {
     console.log(error.message);
   }
@@ -35,7 +39,8 @@ exports.updateStation = async (req, res, next) => {
     if (!station) {
       return res.status(400).json({ success: false });
     }
-    res.status(200).json({ success: true, data: station });
+    // res.status(200).json({ success: true, data: station });
+    console.log(station);
   } catch (err) {
     res.status(400).json({ success: false });
   }
@@ -50,7 +55,8 @@ exports.deleteStation = async (req, res, next) => {
     if (!station) {
       return res.status(400).json({ success: false });
     }
-    res.redirect('/');
+    // res.redirect('/api/v1/business');
+    console.log('station has been deleted');
   } catch (err) {
     console.log(err);
   }

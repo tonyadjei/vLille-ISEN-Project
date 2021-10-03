@@ -16,7 +16,7 @@
     <div class="container">
       <h1 class="mb-4">Find station by name</h1>
 
-      <form action="/api/v1/business/find" method="POST">
+      <form action="/api/v1/business/find" method="GET">
         <%- include('_form_fields_business') %>
       </form>
       <br />
@@ -46,6 +46,13 @@
             class="d-inline"
           >
             <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+          <form
+            action="/api/v1/business/<%= station._id %>?_method=PUT"
+            method="POST"
+            class="d-inline"
+          >
+            <button type="submit" class="btn btn-primary">Update</button>
           </form>
         </div>
       </div>

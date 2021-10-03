@@ -14,29 +14,34 @@
   </head>
   <body>
     <div class="container">
-      <h1 class="mb-4">Find below the stations near you</h1>
+      <% if(stations.length === 0 ) { %>
+        <h1>Sorry, there are no stations near you. Please try a different location.</h1>
+      <% } else { %>
 
-      <% stations.forEach(station => { %>
-      <div class="card mt-4">
-        <div class="card-body">
-          <h4 class="card-title"><%= station.fields.commune %></h4>
-          <div class="card-subtitle text-muted mb-2">
-            <%= station.fields.nom %>
-          </div>
-          <div class="card-text mb-2">
-            <p>State: <%= station.fields.etat%></p>
-            <p>Connection state: <%= station.fields.etatconnexion%></p>
-            <p>Type: <%= station.fields.type %></p>
-            <p>
-              Number of bicycles available: <%= station.fields.nbvelosdispo %>
-            </p>
-            <p>
-              Number of parkings available: <%= station.fields.nbplacesdispo %>
-            </p>
+        <h1 class="mb-4">Find below the stations near you</h1>
+
+        <% stations.forEach(station => { %>
+        <div class="card mt-4">
+          <div class="card-body">
+            <h4 class="card-title"><%= station.fields.commune %></h4>
+            <div class="card-subtitle text-muted mb-2">
+              <%= station.fields.nom %>
+            </div>
+            <div class="card-text mb-2">
+              <p>State: <%= station.fields.etat%></p>
+              <p>Connection state: <%= station.fields.etatconnexion%></p>
+              <p>Type: <%= station.fields.type %></p>
+              <p>
+                Number of bicycles available: <%= station.fields.nbvelosdispo %>
+              </p>
+              <p>
+                Number of parkings available: <%= station.fields.nbplacesdispo %>
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-      <% }) %>
+        <% }) %>
+      <% } %>
     </div>
   </body>
 </html>
